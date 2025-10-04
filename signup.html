@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Sign Up</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .signup-container {
+      width: 100%;
+      max-width: 350px;
+    }
+
+    .signup-box {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .signup-box h1 {
+      font-family: 'Billabong', cursive;
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .signup-box p {
+      font-weight: 600;
+      color: #8e8e8e;
+      margin-bottom: 20px;
+      font-size: 17px;
+    }
+
+    .fb-login {
+      background: #0095f6;
+      color: #fff;
+      font-weight: 600;
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+      width: 100%;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    .or {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+      color: #8e8e8e;
+      font-size: 13px;
+    }
+
+    .or::before,
+    .or::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #dbdbdb;
+    }
+
+    .or:not(:empty)::before {
+      margin-right: .75em;
+    }
+
+    .or:not(:empty)::after {
+      margin-left: .75em;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 9px 8px;
+      border: 1px solid #dbdbdb;
+      border-radius: 4px;
+      background: #fafafa;
+      font-size: 14px;
+    }
+
+    .signup-btn {
+      margin-top: 15px;
+      background: #0095f6;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 4px;
+      padding: 8px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .signup-btn:disabled {
+      background: #b2dffc;
+      cursor: not-allowed;
+    }
+
+    .terms {
+      font-size: 12px;
+      color: #8e8e8e;
+      margin-top: 15px;
+      line-height: 1.4;
+    }
+
+    .login-box {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    .login-box a {
+      color: #0095f6;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      .signup-box {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <div class="signup-box">
+      <h1>Instagram</h1>
+      <p>Sign up to see photos and videos from your friends.</p>
+      <button class="fb-login"><i class="fab fa-facebook-square"></i> Log in with Facebook</button>
+      <div class="or">OR</div>
+
+      <form id="signupForm">
+        <div class="input-group">
+          <input type="text" id="email" placeholder="Mobile Number or Email">
+        </div>
+        <div class="input-group">
+          <input type="text" id="fullname" placeholder="Full Name">
+        </div>
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Username">
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Password">
+        </div>
+        <button type="submit" id="signupBtn" class="signup-btn" disabled>Sign Up</button>
+      </form>
+
+      <div class="terms">
+        By signing up, you agree to our <strong>Terms</strong>, <strong>Data Policy</strong> and <strong>Cookies Policy</strong>.
+      </div>
+    </div>
+
+    <div class="login-box">
+      Have an account? <a href="#">Log in</a>
+    </div>
+  </div>
+
+  <script>
+    // Enable sign up button when all fields are filled
+    const inputs = document.querySelectorAll("#signupForm input");
+    const signupBtn = document.getElementById("signupBtn");
+
+    function checkInputs() {
+      let allFilled = true;
+      inputs.forEach(input => {
+        if (!input.value.trim()) allFilled = false;
+      });
+      signupBtn.disabled = !allFilled;
+    }
+
+    inputs.forEach(input => input.addEventListener("input", checkInputs));
+
+    document.getElementById("signupForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Sign up successful (demo)");
+    });
+  </script>
+</body>
+</html>

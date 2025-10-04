@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: #262626;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: white;
+            border-bottom: 1px solid #dbdbdb;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            font-family: 'Grand Hotel', cursive;
+            font-size: 24px;
+            color: #262626;
+        }
+
+        .search-container {
+            position: relative;
+            width: 250px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 8px 16px 8px 36px;
+            background-color: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8e8e8e;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons i {
+            font-size: 22px;
+            color: #262626;
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #dbdbdb;
+            overflow: hidden;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            max-width: 614px;
+            margin-top: 60px;
+        }
+
+        .stories {
+            display: flex;
+            gap: 15px;
+            padding: 16px;
+            background-color: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+
+        .story {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .story-avatar {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .story-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .story-username {
+            font-size: 12px;
+            margin-top: 5px;
+            max-width: 66px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .post {
+            background-color: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            margin-bottom: 24px;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+        }
+
+        .post-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .post-user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .post-user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-username {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .post-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 16px;
+        }
+
+        .post-actions-left {
+            display: flex;
+            gap: 16px;
+        }
+
+        .post-actions i {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .post-likes {
+            padding: 0 16px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .post-caption {
+            padding: 0 16px;
+            margin-bottom: 8px;
+        }
+
+        .post-caption-username {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .post-comments {
+            padding: 0 16px;
+            color: #8e8e8e;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .post-time {
+            padding: 0 16px 16px;
+            color: #8e8e8e;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .add-comment {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-top: 1px solid #efefef;
+        }
+
+        .add-comment input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .add-comment button {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            cursor: pointer;
+            opacity: 0.3;
+        }
+
+        .add-comment button.active {
+            opacity: 1;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 320px;
+            margin-top: 60px;
+            margin-left: 30px;
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-details .username {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .profile-details .fullname {
+            color: #8e8e8e;
+            font-size: 14px;
+        }
+
+        .suggestions-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .suggestions-header h3 {
+            font-size: 14px;
+            color: #8e8e8e;
+            font-weight: 600;
+        }
+
+        .suggestions-header a {
+            font-size: 12px;
+            color: #262626;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .suggestion {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .suggestion-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
+        .suggestion-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .suggestion-details {
+            flex: 1;
+        }
+
+        .suggestion-username {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .suggestion-info {
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+
+        .suggestion-follow {
+            font-size: 12px;
+            color: #0095f6;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .footer-links {
+            margin-top: 25px;
+        }
+
+        .footer-links a {
+            font-size: 11px;
+            color: #c7c7c7;
+            text-decoration: none;
+            margin-right: 8px;
+        }
+
+        .copyright {
+            margin-top: 15px;
+            font-size: 11px;
+            color: #c7c7c7;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border-top: 1px solid #dbdbdb;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .mobile-nav-icons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .mobile-nav-icons i {
+            font-size: 22px;
+            color: #262626;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1000px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .stories {
+                margin-bottom: 10px;
+            }
+
+            .post {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 10px;
+            }
+
+            .nav-icons {
+                gap: 15px;
+            }
+
+            .stories {
+                padding: 10px;
+            }
+
+            .story-avatar {
+                width: 56px;
+                height: 56px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">Instagram</div>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="nav-icons">
+                <i class="fas fa-home"></i>
+                <i class="far fa-paper-plane"></i>
+                <i class="far fa-compass"></i>
+                <i class="far fa-heart"></i>
+                <div class="profile-pic">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Stories -->
+            <div class="stories">
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                    </div>
+                    <div class="story-username">johndoe</div>
+                </div>
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/26.jpg" alt="User">
+                    </div>
+                    <div class="story-username">sarah_m</div>
+                </div>
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="User">
+                    </div>
+                    <div class="story-username">mike_t</div>
+                </div>
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="User">
+                    </div>
+                    <div class="story-username">emily_j</div>
+                </div>
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="User">
+                    </div>
+                    <div class="story-username">alex_r</div>
+                </div>
+                <div class="story">
+                    <div class="story-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User">
+                    </div>
+                    <div class="story-username">lisa_k</div>
+                </div>
+            </div>
+
+            <!-- Posts -->
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-user">
+                        <div class="post-user-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                        </div>
+                        <div class="post-username">johndoe</div>
+                    </div>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <img class="post-image" src="https://picsum.photos/600/600?random=1" alt="Post">
+                <div class="post-actions">
+                    <div class="post-actions-left">
+                        <i class="far fa-heart"></i>
+                        <i class="far fa-comment"></i>
+                        <i class="far fa-paper-plane"></i>
+                    </div>
+                    <i class="far fa-bookmark"></i>
+                </div>
+                <div class="post-likes">1,234 likes</div>
+                <div class="post-caption">
+                    <span class="post-caption-username">johndoe</span>
+                    Beautiful sunset at the beach! #sunset #beach #vacation
+                </div>
+                <div class="post-comments">View all 42 comments</div>
+                <div class="post-time">2 hours ago</div>
+                <div class="add-comment">
+                    <input type="text" placeholder="Add a comment...">
+                    <button>Post</button>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-user">
+                        <div class="post-user-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/26.jpg" alt="User">
+                        </div>
+                        <div class="post-username">sarah_m</div>
+                    </div>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <img class="post-image" src="https://picsum.photos/600/600?random=2" alt="Post">
+                <div class="post-actions">
+                    <div class="post-actions-left">
+                        <i class="far fa-heart"></i>
+                        <i class="far fa-comment"></i>
+                        <i class="far fa-paper-plane"></i>
+                    </div>
+                    <i class="far fa-bookmark"></i>
+                </div>
+                <div class="post-likes">892 likes</div>
+                <div class="post-caption">
+                    <span class="post-caption-username">sarah_m</span>
+                    Coffee and coding ☕️ #programming #developer #coffee
+                </div>
+                <div class="post-comments">View all 23 comments</div>
+                <div class="post-time">5 hours ago</div>
+                <div class="add-comment">
+                    <input type="text" placeholder="Add a comment...">
+                    <button>Post</button>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-user">
+                        <div class="post-user-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="User">
+                        </div>
+                        <div class="post-username">mike_t</div>
+                    </div>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <img class="post-image" src="https://picsum.photos/600/600?random=3" alt="Post">
+                <div class="post-actions">
+                    <div class="post-actions-left">
+                        <i class="far fa-heart"></i>
+                        <i class="far fa-comment"></i>
+                        <i class="far fa-paper-plane"></i>
+                    </div>
+                    <i class="far fa-bookmark"></i>
+                </div>
+                <div class="post-likes">1,567 likes</div>
+                <div class="post-caption">
+                    <span class="post-caption-username">mike_t</span>
+                    Mountain hiking adventures! #hiking #nature #mountains
+                </div>
+                <div class="post-comments">View all 56 comments</div>
+                <div class="post-time">1 day ago</div>
+                <div class="add-comment">
+                    <input type="text" placeholder="Add a comment...">
+                    <button>Post</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-info">
+                <div class="profile-avatar">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile">
+                </div>
+                <div class="profile-details">
+                    <div class="username">jane_smith</div>
+                    <div class="fullname">Jane Smith</div>
+                </div>
+            </div>
+
+            <div class="suggestions">
+                <div class="suggestions-header">
+                    <h3>Suggestions For You</h3>
+                    <a href="#">See All</a>
+                </div>
+
+                <div class="suggestion">
+                    <div class="suggestion-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="User">
+                    </div>
+                    <div class="suggestion-details">
+                        <div class="suggestion-username">amanda_w</div>
+                        <div class="suggestion-info">Suggested for you</div>
+                    </div>
+                    <div class="suggestion-follow">Follow</div>
+                </div>
+
+                <div class="suggestion">
+                    <div class="suggestion-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="User">
+                    </div>
+                    <div class="suggestion-details">
+                        <div class="suggestion-username">robert_j</div>
+                        <div class="suggestion-info">Followed by johndoe</div>
+                    </div>
+                    <div class="suggestion-follow">Follow</div>
+                </div>
+
+                <div class="suggestion">
+                    <div class="suggestion-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User">
+                    </div>
+                    <div class="suggestion-details">
+                        <div class="suggestion-username">laura_m</div>
+                        <div class="suggestion-info">New to Instagram</div>
+                    </div>
+                    <div class="suggestion-follow">Follow</div>
+                </div>
+
+                <div class="suggestion">
+                    <div class="suggestion-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="User">
+                    </div>
+                    <div class="suggestion-details">
+                        <div class="suggestion-username">david_k</div>
+                        <div class="suggestion-info">Followed by 2 of your friends</div>
+                    </div>
+                    <div class="suggestion-follow">Follow</div>
+                </div>
+
+                <div class="suggestion">
+                    <div class="suggestion-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="User">
+                    </div>
+                    <div class="suggestion-details">
+                        <div class="suggestion-username">sophia_t</div>
+                        <div class="suggestion-info">Popular</div>
+                    </div>
+                    <div class="suggestion-follow">Follow</div>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Help</a>
+                <a href="#">Press</a>
+                <a href="#">API</a>
+                <a href="#">Jobs</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Locations</a>
+                <a href="#">Language</a>
+            </div>
+
+            <div class="copyright">© 2023 INSTAGRAM FROM META</div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-icons">
+            <i class="fas fa-home"></i>
+            <i class="far fa-search"></i>
+            <i class="far fa-plus-square"></i>
+            <i class="far fa-video"></i>
+            <div class="profile-pic">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Like button functionality
+        document.querySelectorAll('.post-actions-left .fa-heart').forEach(icon => {
+            icon.addEventListener('click', function () {
+                if (this.classList.contains('far')) {
+                    this.classList.remove('far');
+                    this.classList.add('fas');
+                    this.style.color = '#ed4956';
+                } else {
+                    this.classList.remove('fas');
+                    this.classList.add('far');
+                    this.style.color = '';
+                }
+            });
+        });
+
+        // Comment button functionality
+        document.querySelectorAll('.add-comment input').forEach(input => {
+            input.addEventListener('input', function () {
+                const button = this.nextElementSibling;
+                if (this.value.trim() !== '') {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        });
+
+        // Bookmark button functionality
+        document.querySelectorAll('.post-actions .fa-bookmark').forEach(icon => {
+            icon.addEventListener('click', function () {
+                if (this.classList.contains('far')) {
+                    this.classList.remove('far');
+                    this.classList.add('fas');
+                } else {
+                    this.classList.remove('fas');
+                    this.classList.add('far');
+                }
+            });
+        });
+
+        // Follow button functionality
+        document.querySelectorAll('.suggestion-follow').forEach(button => {
+            button.addEventListener('click', function () {
+                if (this.textContent === 'Follow') {
+                    this.textContent = 'Following';
+                } else {
+                    this.textContent = 'Follow';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

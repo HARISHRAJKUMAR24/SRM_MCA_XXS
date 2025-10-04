@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Messages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: #262626;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            border-right: 1px solid #dbdbdb;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 15px;
+            border-bottom: 1px solid #dbdbdb;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .conversations {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .conversation {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .conversation:hover {
+            background: #f5f5f5;
+        }
+
+        .conversation img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .conversation-details {
+            flex: 1;
+        }
+
+        .conversation-username {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .conversation-last {
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+
+        /* Chat area */
+        .chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+        }
+
+        .chat-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .chat-header .username {
+            font-weight: 600;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .sent {
+            background: #0095f6;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .received {
+            background: #efefef;
+            align-self: flex-start;
+        }
+
+        .chat-input {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #dbdbdb;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #dbdbdb;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        .chat-input button.active {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .conversation-details {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">Messages</div>
+            <div class="conversations">
+                <div class="conversation" data-user="sarah_m">
+                    <img src="https://randomuser.me/api/portraits/women/26.jpg" alt="User">
+                    <div class="conversation-details">
+                        <div class="conversation-username">sarah_m</div>
+                        <div class="conversation-last">Typing...</div>
+                    </div>
+                </div>
+                <div class="conversation" data-user="mike_t">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="User">
+                    <div class="conversation-details">
+                        <div class="conversation-username">mike_t</div>
+                        <div class="conversation-last">See you tomorrow!</div>
+                    </div>
+                </div>
+                <div class="conversation" data-user="alex_r">
+                    <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="User">
+                    <div class="conversation-details">
+                        <div class="conversation-username">alex_r</div>
+                        <div class="conversation-last">Cool 👍</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat -->
+        <div class="chat">
+            <div class="chat-header">
+                <img src="https://randomuser.me/api/portraits/women/26.jpg" alt="User">
+                <div class="username">sarah_m</div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message received">Hey! How’s your day going?</div>
+                <div class="message sent">Pretty good, just working on some code 😅</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Message...">
+                <button id="sendBtn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatInput = document.getElementById("chatInput");
+        const sendBtn = document.getElementById("sendBtn");
+        const chatMessages = document.getElementById("chatMessages");
+
+        // Enable/disable send button
+        chatInput.addEventListener("input", () => {
+            if (chatInput.value.trim() !== "") {
+                sendBtn.classList.add("active");
+            } else {
+                sendBtn.classList.remove("active");
+            }
+        });
+
+        // Send message
+        sendBtn.addEventListener("click", () => {
+            const text = chatInput.value.trim();
+            if (text !== "") {
+                const msg = document.createElement("div");
+                msg.classList.add("message", "sent");
+                msg.textContent = text;
+                chatMessages.appendChild(msg);
+                chatInput.value = "";
+                sendBtn.classList.remove("active");
+                chatMessages.scrollTop = chatMessages.scrollHeight; // auto-scroll
+            }
+        });
+    </script>
+</body>
+
+</html>

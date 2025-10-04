@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .login-box {
+            background: #fff;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .login-box h1 {
+            font-family: 'Billabong', cursive;
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 9px 8px;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            background: #fafafa;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            margin-top: 15px;
+            background: #0095f6;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            padding: 8px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .login-btn:disabled {
+            background: #b2dffc;
+            cursor: not-allowed;
+        }
+
+        .or {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #8e8e8e;
+            font-size: 13px;
+        }
+
+        .or::before,
+        .or::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #dbdbdb;
+        }
+
+        .or:not(:empty)::before {
+            margin-right: .75em;
+        }
+
+        .or:not(:empty)::after {
+            margin-left: .75em;
+        }
+
+        .fb-login {
+            color: #385185;
+            font-weight: 600;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .forgot {
+            font-size: 12px;
+            color: #00376b;
+            cursor: pointer;
+        }
+
+        .signup-box {
+            background: #fff;
+            border: 1px solid #dbdbdb;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .signup-box a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .login-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Instagram</h1>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Phone number, username, or email">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password">
+                </div>
+                <button type="submit" id="loginBtn" class="login-btn" disabled>Log In</button>
+            </form>
+            <div class="or">OR</div>
+            <div class="fb-login"><i class="fab fa-facebook-square"></i> Log in with Facebook</div>
+            <div class="forgot">Forgot password?</div>
+        </div>
+
+        <div class="signup-box">
+            Don’t have an account? <a href="#">Sign up</a>
+        </div>
+    </div>
+
+    <script>
+        // Enable login button when both fields are filled
+        const username = document.getElementById("username");
+        const password = document.getElementById("password");
+        const loginBtn = document.getElementById("loginBtn");
+
+        function checkInputs() {
+            if (username.value.trim() && password.value.trim()) {
+                loginBtn.disabled = false;
+            } else {
+                loginBtn.disabled = true;
+            }
+        }
+
+        username.addEventListener("input", checkInputs);
+        password.addEventListener("input", checkInputs);
+
+        document.getElementById("loginForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Login successful (demo)");
+        });
+    </script>
+</body>
+
+</html>
